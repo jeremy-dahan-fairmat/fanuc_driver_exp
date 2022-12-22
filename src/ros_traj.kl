@@ -741,6 +741,15 @@ BEGIN
 	stat__ = jdta_to_jpos(msg.joint_data, grp_nfo, jpos__)
 	IF (stat__ <> 0) THEN RETURN (-ABS(stat__)); ENDIF
 
+	IF(msg.joint_data[7] > 0) 
+	THEN 
+		RDO[0] = ON
+		RDO[1] = OFF
+	ELSE
+		RDO[0] = OFF
+		RDO[1] = ON
+	ENDIF
+
 	-- check again here, as caller could have specified that we are
 	-- allowed to block (if not, then we can only get here if 'rdy'
 	-- is already 'ON' and we will not block here)
