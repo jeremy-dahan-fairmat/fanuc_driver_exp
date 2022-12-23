@@ -121,6 +121,13 @@ BEGIN
 		ENDIF
 	ENDFOR
 
+
+	IF (RDO[1] = ON) THEN 
+		joint_data[7] = 1
+	ELSE
+		joint_data[7] = 0
+	ENDIF
+
 	RETURN (stat__)
 END jpos_to_jdta
 
