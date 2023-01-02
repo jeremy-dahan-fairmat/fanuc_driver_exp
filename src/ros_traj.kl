@@ -737,18 +737,16 @@ BEGIN
 
 	-- TODO: add multi-group support
 
+	WRITE TPDISPLAY(' I ', 'WRITING J7', msg.joint_data[7], CR)
+
+	SET_REAL_REG(197, msg.joint_data[7], stat__)
+	--IF (stat__ <> 0) THEN RETURN (-ABS(stat__)); ENDIF
+
+	WRITE TPDISPLAY(' I ', 'TRAJ WRITING J1-J6 JOINTS', CR)
 	-- convert ROS traj pt to Fanuc 'joint position'
 	stat__ = jdta_to_jpos(msg.joint_data, grp_nfo, jpos__)
 	IF (stat__ <> 0) THEN RETURN (-ABS(stat__)); ENDIF
 
-	IF(msg.joint_data[7] > 0.5) 
-	THEN 
-		RDO[1] = ON
-		RDO[0] = OFF
-	ELSE
-		RDO[0] = OFF
-		RDO[1] = ON
-	ENDIF
 
 	-- check again here, as caller could have specified that we are
 	-- allowed to block (if not, then we can only get here if 'rdy'

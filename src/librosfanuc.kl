@@ -103,6 +103,9 @@ ROUTINE jpos_to_jdta
 VAR
 	stat__       : INTEGER
 	i__          : INTEGER
+	temp_joint	 : REAL
+	dummy_flag1  : BOOLEAN
+	dummy_int1   : INTEGER
 BEGIN
 	stat__ = 0
 
@@ -122,11 +125,10 @@ BEGIN
 	ENDFOR
 
 
-	IF (RDO[1] = ON) THEN 
-		joint_data[7] = 1
-	ELSE
-		joint_data[7] = 0
-	ENDIF
+	GET_REG(197, dummy_flag1, dummy_int1, temp_joint, stat__)
+	joint_data[7] = temp_joint + dummy_int1
+	IF (stat__ <> 0) THEN RETURN (-ABS(stat__)); ENDIF
+
 
 	RETURN (stat__)
 END jpos_to_jdta
